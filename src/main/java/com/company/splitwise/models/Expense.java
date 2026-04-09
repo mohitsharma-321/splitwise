@@ -18,7 +18,7 @@ public class Expense extends BaseModel{
     private String description;
     private int amount; // In paisa
 
-    @ManyToOne    //source to destination -> in this case - multiple expenses and one user
+    @ManyToOne    //source (classname{Expense}) to destination (Field Type {User}) -> in this case - multiple expenses and one user
     private User createdBy;
 
     @ElementCollection    // allows us to store object in database
