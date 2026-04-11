@@ -24,7 +24,7 @@ public class UserController {
     @GetMapping("/user/{userId}")
     private UserDTO getUser(@PathVariable Long userId) {
         Optional<User> user = userService.getUser(userId);
-        return user.map(UserDTO::from).orElse(null);
+        return user.map(UserDTO::from).orElse(null);// using method reference with Optional class feature, Can also be done by lamda expression
     }
 }
 
