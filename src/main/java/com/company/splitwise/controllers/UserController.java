@@ -1,6 +1,7 @@
 package com.company.splitwise.controllers;
 
 import com.company.splitwise.dtos.CreateUserDTO;
+import com.company.splitwise.dtos.ResponseDTO;
 import com.company.splitwise.dtos.UserDTO;
 import com.company.splitwise.models.User;
 import com.company.splitwise.services.UserService;
@@ -19,12 +20,15 @@ public class UserController {
     @PostMapping("/user")
     private UserDTO createUser(@RequestBody CreateUserDTO userRequest){
         return userService.createUser(userRequest);
+
     }
 
+
     @GetMapping("/user/{userId}")
-    private UserDTO getUser(@PathVariable Long userId) {
+    private ResponseDTO<UserDTO> getUser(@PathVariable Long userId) {
         Optional<User> user = userService.getUser(userId);
-        return user.map(UserDTO::from).orElse(null);// using method reference with Optional class feature, Can also be done by lamda expression
+        Optional<UserDTO> userDTO = user.map(UserDTO::from);// using method reference with Optional class feature, Can also be done by lamda expression
+        return userDTO.map(ResponseDTO::success).orElse(ResponseDTO.notFound());
     }
 }
 
