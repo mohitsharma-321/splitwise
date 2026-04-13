@@ -43,8 +43,8 @@ public class UserService {
         if(!userRepository.existsById(userId)){
             return null;
         }
-
-        User user = User.from(updateRequest, updateRequest.getPassword());
+        String hashedPassword = passwordEncoder.encode(updateRequest.getPassword());
+        User user = User.from(updateRequest, hashedPassword);
         user.setId(userId);
         User persistedUser = userRepository.save(user);
         return UserDTO.from(persistedUser);
