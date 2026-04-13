@@ -1,6 +1,7 @@
 package com.company.splitwise.services;
 
 import com.company.splitwise.dtos.CreateUserDTO;
+import com.company.splitwise.dtos.ResponseDTO;
 import com.company.splitwise.dtos.UserDTO;
 import com.company.splitwise.models.User;
 import com.company.splitwise.repositories.UserRepository;
@@ -35,5 +36,17 @@ public class UserService {
 
     public Optional<User> getUser(Long userId) {
         return userRepository.findById(userId);
+    }
+
+    public UserDTO updateUser(Long userId, CreateUserDTO updateRequest) {
+        // If user exists
+        if(!userRepository.existsById(userId)){
+            return null;
+        }
+
+        User user = User.from(updateRequest, updateRequest.getPassword());
+        user.setId(userId);
+        User persistedUser = userRepository.save(user);
+        return UserDTO.from(persistedUser);
     }
 }

@@ -30,7 +30,18 @@ public class UserController {
         Optional<UserDTO> userDTO = user.map(UserDTO::from);// using method reference with Optional class feature, Can also be done by lamda expression
         return userDTO.map(ResponseDTO::success).orElse(ResponseDTO.notFound());
     }
+
+    @PutMapping("/user/{userId}")
+    private ResponseDTO<UserDTO> updateUser(@PathVariable Long userId,@RequestBody CreateUserDTO updateRequest) {
+        UserDTO userDTO =  userService.updateUser(userId,updateRequest);
+        if (userDTO == null)
+            return ResponseDTO.notFound();
+        return ResponseDTO.success(userDTO);
+    }
 }
 
 // Create User => HTTP Verb-> POST , Endpoint -> /api/v1/user
 // Fetch User => HTTP Verb -> GET , Endpoint  -> /api/v1/user/:userId
+// Update User => HTTP Verb -> PUT , Endpoint -> /api/v1/user/:userId
+// For Each HTTPS response , there is status code
+
