@@ -3,6 +3,7 @@ package com.company.splitwise.controllers;
 import com.company.splitwise.dtos.CreateExpenseDTO;
 import com.company.splitwise.dtos.ExpenseDTO;
 import com.company.splitwise.dtos.ResponseDTO;
+import com.company.splitwise.exceptions.InvalidUserException;
 import com.company.splitwise.models.Expense;
 import com.company.splitwise.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,12 @@ public class ExpenseController {
 
     @PostMapping("/expense")
     public ResponseDTO<ExpenseDTO> createExpense(@RequestBody CreateExpenseDTO expenseRequest) {
-        return expenseService.createExpense(expenseRequest.getUserId(),expenseRequest);
+        try {
+            return expenseService.createExpense(expenseRequest.getUserId(),expenseRequest);
+        }catch (InvalidUserException e) {
+            return ResponseDTO.notFound();
+        }
+
     }
 
     @GetMapping("/expense/:{expenseId}")

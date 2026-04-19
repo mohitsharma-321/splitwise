@@ -45,3 +45,6 @@ public class UserController {
 // Update User => HTTP Verb -> PUT , Endpoint -> /api/v1/user/:userId
 // For Each HTTPS response , there is status code
 
+// HTTP VERB - POST Endpoint => /api/v1/expense = user or group
+// HTTP VERB - POST Endpoint => /api/v1/user/:userId/expense = only a user expense
+
