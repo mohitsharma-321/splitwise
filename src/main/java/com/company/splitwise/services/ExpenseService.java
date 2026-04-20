@@ -6,6 +6,7 @@ import com.company.splitwise.dtos.ResponseDTO;
 import com.company.splitwise.exceptions.InvalidUserException;
 import com.company.splitwise.models.Expense;
 import com.company.splitwise.models.User;
+import com.company.splitwise.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class ExpenseService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ExpenseRepository expenseRepository;
 
     public Optional<ExpenseDTO> createExpense(Long userId, CreateExpenseDTO expenseRequest) {
 
@@ -36,7 +40,18 @@ public class ExpenseService {
             throw new InvalidUserException("Invalid User !!");
         }
 
-        return null;
+        //Creating Expense here
+        Expense expense = transformExpenseRequest(expenseRequest);
+
+        //Persisting Expense
+        Expense persistedExpense = expenseRepository.save(expense);
+
+
+        return null;        // need to return
+    }
+
+    private Expense transformExpenseRequest(CreateExpenseDTO expenseRequest) {
+
     }
 
     public Optional<Expense> getExpense(Long expenseId) {
