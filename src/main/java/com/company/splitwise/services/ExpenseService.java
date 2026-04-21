@@ -10,9 +10,7 @@ import com.company.splitwise.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,8 +34,11 @@ public class ExpenseService {
         Set<Long> userIds = Stream.of(expenseRequest.getPaidBy().keySet(), expenseRequest.getOwedBy().keySet())
                                   .flatMap(Collection::stream)
                                   .collect(Collectors.toSet());
-        if(!userIds){
-            throw new InvalidUserException("Invalid User !!");
+
+        boolean areUsersValid = userService.validateIds(userIds);
+
+        if(!areUsersValid){
+            throw new InvalidUserException("Invalid User(s) !!");
         }
 
         //Creating Expense here
@@ -51,9 +52,23 @@ public class ExpenseService {
     }
 
     private Expense transformExpenseRequest(CreateExpenseDTO expenseRequest) {
-
+        Map<User,Long> paidBy = transformReferencedUsers(expenseRequest.getPaidBy());
+        Map<User,Long> owedBy = transformReferencedUsers(expenseRequest.getOwedBy());
+        return Expense.from(expenseRequest,paidBy,owedBy);
     }
 
+    private Map<User, Long> transformReferencedUsers(Map<Long,Long> source) {
+        Map<User,Long> target = new HashMap<>();
+
+        for(Map.Entry<Long,Long> id_amount : source.entrySet()) {
+            Long id = id_amount.getKey();
+            Long amount = id_amount.getValue();
+
+            Optional<User> user = userService.getUser(id);
+            target.put(user.get(),amount);
+        }
+        return target;
+    }
     public Optional<Expense> getExpense(Long expenseId) {
         return null;
     }

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -48,5 +49,9 @@ public class UserService {
         user.setId(userId);
         User persistedUser = userRepository.save(user);
         return UserDTO.from(persistedUser);
+    }
+
+    public boolean validateIds(Set<Long> userIds) {
+        return true;
     }
 }
