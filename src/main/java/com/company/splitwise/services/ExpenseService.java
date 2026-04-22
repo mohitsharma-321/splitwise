@@ -57,6 +57,8 @@ public class ExpenseService {
         return Expense.from(expenseRequest,paidBy,owedBy);
     }
 
+    // This function transform/convert the paidBy and owedBy format from Map<Long,Long> to Map<User,Long> to store in the model.
+    // It provides Abstraction that it doesn't need to store whole User Object, just userId is enough.
     private Map<User, Long> transformReferencedUsers(Map<Long,Long> source) {
         Map<User,Long> target = new HashMap<>();
 
