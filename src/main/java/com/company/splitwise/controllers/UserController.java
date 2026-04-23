@@ -5,6 +5,7 @@ import com.company.splitwise.dtos.ResponseDTO;
 import com.company.splitwise.dtos.UserDTO;
 import com.company.splitwise.models.User;
 import com.company.splitwise.services.UserService;
+import com.company.splitwise.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class UserController {
     private ResponseDTO<UserDTO> getUser(@PathVariable Long userId) {
         Optional<User> user = userService.getUser(userId);
         Optional<UserDTO> userDTO = user.map(UserDTO::from);// using method reference with Optional class feature, Can also be done by lamda expression
-        return userDTO.map(ResponseDTO::success).orElse(ResponseDTO.notFound());
+        return ResponseUtils.toResponse(userDTO);
     }
 
     @PutMapping("/user/{userId}")
