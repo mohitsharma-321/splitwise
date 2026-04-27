@@ -1,5 +1,6 @@
 package com.company.splitwise.controllers;
 
+import com.company.splitwise.dtos.CreateGroupDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class GroupController {
 
     @PostMapping("/group")
-    public void createGroup(@RequestBody Object createGroupRequest){
+    public void createGroup(@RequestBody CreateGroupDTO createGroupRequest){
 
     }
 
