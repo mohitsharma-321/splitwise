@@ -1,5 +1,6 @@
 package com.company.splitwise.models;
 
+import com.company.splitwise.dtos.CreateGroupDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -21,4 +22,8 @@ public class Group extends BaseModel{
 
     @ManyToMany
     private List<User> admins = new ArrayList<>();
+
+    public static Group from(CreateGroupDTO createGroupRequest) {
+        return new Group();
+    }
 }
