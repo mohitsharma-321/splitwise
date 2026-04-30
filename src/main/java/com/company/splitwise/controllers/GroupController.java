@@ -3,6 +3,7 @@ package com.company.splitwise.controllers;
 import com.company.splitwise.dtos.CreateGroupDTO;
 import com.company.splitwise.dtos.GroupDTO;
 import com.company.splitwise.dtos.ResponseDTO;
+import com.company.splitwise.models.Group;
 import com.company.splitwise.services.GroupService;
 import com.company.splitwise.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,9 @@ public class GroupController {
     }
 
     @GetMapping("/group/{groupId}")
-    public void getGroup(@PathVariable Long groupId) {
-
+    public ResponseDTO<GroupDTO> getGroup(@PathVariable Long groupId) {
+            Optional<Group> group = groupService.getGroup(groupId);
+            return ResponseUtils.toResponse(group.map(GroupDTO::from));
     }
 
     @PostMapping("/group/{groupId}/settle")

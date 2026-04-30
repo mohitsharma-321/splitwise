@@ -6,6 +6,8 @@ import com.company.splitwise.models.Group;
 import com.company.splitwise.repositories.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 public class GroupService {
 
     @Autowired
@@ -14,5 +16,9 @@ public class GroupService {
     public GroupDTO createGroup(CreateGroupDTO createGroupRequest) {
         Group group = groupRepository.save(Group.from(createGroupRequest));
         return GroupDTO.from(group);
+    }
+
+    public Optional<Group> getGroup(Long groupId) {
+        return groupRepository.findById(groupId);
     }
 }
