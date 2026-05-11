@@ -19,6 +19,7 @@ import java.util.Map;
 @Table(name = "EXPENSES")
 public class Expense extends BaseModel{
     private String description;
+    private Currency currency;
     private long amount; // In paisa
 
     @ManyToOne    //source (classname{Expense}) to destination (Field Type {User}) -> in this case - multiple expenses and one user
@@ -29,7 +30,6 @@ public class Expense extends BaseModel{
 
     @ElementCollection
     private Map<User,Integer> owedBy = new HashMap<>();
-
     public static Expense from(CreateExpenseDTO expenseRequest, Map<User,Long> paidBy,Map<User,Long> owedBy) {
         return null;
     }
