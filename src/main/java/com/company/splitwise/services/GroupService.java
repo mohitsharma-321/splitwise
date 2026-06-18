@@ -5,6 +5,7 @@ import com.company.splitwise.dtos.GroupDTO;
 import com.company.splitwise.dtos.SettleResponseDTO;
 import com.company.splitwise.models.Expense;
 import com.company.splitwise.models.Group;
+import com.company.splitwise.models.Transaction;
 import com.company.splitwise.repositories.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,9 +31,9 @@ public class GroupService {
         if (group.isEmpty()) {
             return Optional.empty();
         }
-
-        // Strategy logic left
-        return null;
+        List<Expense> groupExpenses = group.get().getExpenses();
+        List<Transaction> settlementTransactions = settlementStrategy.settleExpenses(groupExpenses);
+        return Optional.of(SettleResponseDTO.builder().transactions(settlementTransactions).build());
         }
 
 }
