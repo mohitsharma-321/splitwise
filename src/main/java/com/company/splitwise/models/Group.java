@@ -4,14 +4,16 @@ import com.company.splitwise.dtos.CreateGroupDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "GROUPS")
 public class Group extends BaseModel{
