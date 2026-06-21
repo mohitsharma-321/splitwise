@@ -20,10 +20,10 @@ public class Group extends BaseModel{
     private String name;
 
     @ManyToMany     // JPA will create mapping for userId and groupId
-    private List<User> users = new ArrayList<>();
+    private List<User> members = new ArrayList<>();
 
     @ManyToMany
-    private List<User> admins = new ArrayList<>();
+    private List<Expense> expenses = new ArrayList<>();
 
     public static Group from(CreateGroupDTO createGroupRequest) {
         return new Group();
